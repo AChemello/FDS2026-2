@@ -10,13 +10,10 @@ public class App {
         econo.abastece(TipoCombustivel.GASOLINA, 55);
 
         System.out.println("Consumo Inicial: " + econo.getMotor().getConsumo());
-        for (int i = 0; i < 20; i++) {
-        int litrosRestantes = econo.getTanque().getCombustivelDisponivel();
-        System.out.println("Combustível no tanque: " + litrosRestantes + " litros");
+        for (int i = 0; i < 50; i++) {
             econo.abastece(TipoCombustivel.GASOLINA, 55);
-            if (econo.verificaSePodeViajar(550) >= 550) {
-                econo.viaja(550);
-            }
+            System.out.println("Combustível no tanque: " + econo.getTanque().getCombustivelDisponivel() + " litros");
+            econo.viaja(200);
         }
 
         System.out.println("\nConsumo após viagens: " + econo.getMotor().getConsumo());

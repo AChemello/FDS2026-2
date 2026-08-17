@@ -30,7 +30,7 @@ public class Carro {
     public int abastece(TipoCombustivel tipoCombustivel, int quantidade) {
         int capacidadeLivre = tanque.getCapacidade() - tanque.getCombustivelDisponivel();
         int qtdEfetiva = Math.min(capacidadeLivre, quantidade);
-        tanque.abastece(tipoCombustivel, quantidade);
+        tanque.abastece(tipoCombustivel, qtdEfetiva);
         if (motor.getTipoMotor() == TipoCombustivel.FLEX) {
             if(tipoCombustivel == TipoCombustivel.GASOLINA){
                 motor.setConsumo(8);
