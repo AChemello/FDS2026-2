@@ -7,6 +7,9 @@ public class App {
         Carro suvFlex = new Carro("SUVFlex", TipoCombustivel.GASOLINA, 8, 65);
         Carro econo = new Carro("Econo", TipoCombustivel.GASOLINA, 20, 55);
 
+        System.out.println(utilitario + "\n" + esportivo);
+
+
         econo.abastece(TipoCombustivel.GASOLINA, 55);
 
         System.out.println("Consumo Inicial: " + econo.getMotor().getConsumo());
@@ -19,15 +22,16 @@ public class App {
         System.out.println("\nConsumo após viagens: " + econo.getMotor().getConsumo());
         System.out.println(econo);
 
-        // suv.getMotor().setTipoMotor(TipoCombustivel.FLEX);
-        // suvFlex.getMotor().setTipoMotor(TipoCombustivel.FLEX);
+        suv.getMotor().setTipoMotor(TipoCombustivel.FLEX);
+        suvFlex.getMotor().setTipoMotor(TipoCombustivel.FLEX);
 
-        // //System.out.println("certo" + suv);
+        System.out.println("certo" + suv);
 
-        // System.out.println("inicial\n" + suvFlex);
+        System.out.println("inicial\n" + suvFlex);
 
-        // suvFlex.abastece(TipoCombustivel.ALCOOL, 65);
+        suvFlex.abastece(TipoCombustivel.ALCOOL, 65);
 
-        // System.out.println("depois\n" + suvFlex);
+        System.out.println("depois\n" + suvFlex);
     }
 }
+//crair classes para cada task, ingestão de dependencias
