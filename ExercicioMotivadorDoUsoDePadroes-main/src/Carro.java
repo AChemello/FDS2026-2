@@ -14,6 +14,14 @@ public class Carro {
         return modelo;
     }
 
+    public Motor getMotor(){
+        return motor;
+    }
+
+    public TanqueCombustivel getTanque(){
+        return tanque;
+    }
+
     public int getCombustivelDisponivel() {
         return tanque.getCombustivelDisponivel();
     }
@@ -21,13 +29,18 @@ public class Carro {
     // Retorna a quantidade efetivamente abastecida
     public int abastece(TipoCombustivel tipoCombustivel, int quantidade) {
         int capacidadeLivre = tanque.getCapacidade() - tanque.getCombustivelDisponivel();
-        if (capacidadeLivre < quantidade) {
-            tanque.abastece(tipoCombustivel, capacidadeLivre);
-            return capacidadeLivre;
-        } else {
-            tanque.abastece(tipoCombustivel, quantidade);
-            return quantidade;
+        int qtdEfetiva = Math.min(capacidadeLivre, quantidade);
+        tanque.abastece(tipoCombustivel, quantidade);
+        if (motor.getTipoMotor() == TipoCombustivel.FLEX) {
+            if(tipoCombustivel == TipoCombustivel.GASOLINA){
+                motor.setConsumo(8);
+                tanque.settipoCombustivel(TipoCombustivel.GASOLINA);
+            }else if(tipoCombustivel == TipoCombustivel.ALCOOL){
+                motor.setConsumo(6);
+                tanque.settipoCombustivel(TipoCombustivel.ALCOOL);
+            }
         }
+        return qtdEfetiva;
     }
 
     // Retorna a distancia que consegue viajar com o combustivel remanescente

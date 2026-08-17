@@ -22,6 +22,10 @@ public class TanqueCombustivel {
         return combustivelDisponivel;
     }
 
+    public void settipoCombustivel(TipoCombustivel tipoCombustivel){
+        this.tipoCombustivel = tipoCombustivel;
+    }
+
     // Retorna false se o tipo de combustivel for incompativel ou se a quantidade
     // for maior que a capacidade livre
     public boolean abastece(TipoCombustivel tipoCombustivel, int quantidade) {
