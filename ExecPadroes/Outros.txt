@@ -1,0 +1,101 @@
+Com esse material você cobre bem a base teórica — os 10 padrões mais cobrados (criacionais, comportamentais e estruturais), com resumo, quando usar, prós/contras e exemplo prático. Isso te dá boa munição para exercícios de identificação de padrão e de explicação conceitual. Mas "qualquer exercício" é otimista demais — alguns tipos de questão exigem mais do que isso:
+
+O que você já cobre bem:
+
+"Qual padrão resolve esse problema?" (dado um cenário)
+"Explique vantagens/desvantagens de X"
+"Implemente um exemplo simples de X em Java"
+
+O que provavelmente vai pegar você de surpresa:
+
+Diagramas UML dos padrões — muitas provas pedem para desenhar ou interpretar o diagrama de classes, e isso não está nos seus resumos
+Combinação de padrões — exercícios que pedem para usar 2+ padrões juntos (ex: Factory + Strategy, ou Decorator + Facade) num mesmo problema
+Refatoração — te dão um código ruim (cheio de if/else ou herança mal feita) e pedem para você identificar qual padrão aplicar e reescrever
+Diferenciar padrões parecidos — tipo Strategy vs State, ou Decorator vs Proxy vs Adapter (todos "envolvem" um objeto, mas por razões diferentes). Isso costuma ser pegadinha de prova
+Padrões que não estão na sua lista — se a prova cobrir todo o catálogo GoF, faltam vários (Abstract Factory, Prototype, Command, Template Method, Composite, Bridge, Flyweight, Visitor, Mediator, Iterator, Memento, State, Interpreter)
+
+Se quiser, posso montar um resumo rápido comparando os padrões que mais se confundem entre si (Strategy/State, Decorator/Proxy/Adapter, Factory/Abstract Factory), já que isso costuma ser o que mais derruba em prova. Quer que eu faça isso?
+
+pode ser gostaria de bota no meu repositorio no github
+
+Aqui vai a comparação, no mesmo estilo dos resumos anteriores — pronta para colar no repositório:
+
+Strategy vs State
+
+Diferença central: estruturalmente são quase idênticos (uma interface + implementações trocáveis), mas a intenção é diferente.
+
+Strategy: o cliente escolhe explicitamente qual algoritmo usar, e essa escolha normalmente não muda sozinha (ex: você decide new ImpostoRS() ao criar a venda).
+State: o próprio objeto muda de comportamento sozinho, conforme seu estado interno muda (ex: um pedido que se comporta diferente quando está "pendente", "pago" ou "cancelado" — e a transição entre esses estados acontece dentro do próprio sistema, não é o cliente que escolhe toda vez).
+
+Pergunta pra se fazer na prova: "quem decide qual implementação usar, e com que frequência isso muda?" Se é o cliente escolhendo uma vez, é Strategy. Se é o objeto trocando de comportamento sozinho ao longo do tempo/eventos, é State.
+
+java
+// State: o pedido muda de comportamento conforme seu próprio estado
+interface EstadoPedido {
+    void avancar(Pedido pedido);
+}
+
+class Pendente implements EstadoPedido {
+    public void avancar(Pedido pedido) {
+        System.out.println("Pagamento confirmado");
+        pedido.setEstado(new Pago());
+    }
+}
+
+class Pago implements EstadoPedido {
+    public void avancar(Pedido pedido) {
+        System.out.println("Pedido enviado");
+        pedido.setEstado(new Enviado());
+    }
+}
+
+class Enviado implements EstadoPedido {
+    public void avancar(Pedido pedido) {
+        System.out.println("Pedido já foi enviado, nada a fazer");
+    }
+}
+
+class Pedido {
+    private EstadoPedido estado = new Pendente();
+    public void setEstado(EstadoPedido estado) { this.estado = estado; }
+    public void avancar() { estado.avancar(this); }
+}
+Decorator vs Proxy vs Adapter
+
+Os três "envolvem" um objeto e implementam uma interface parecida com a dele — mas o motivo de envolver é diferente:
+
+Adapter: a interface do objeto original não é a que o cliente espera. Você converte uma interface em outra. Resolve incompatibilidade.
+Decorator: a interface é a mesma, mas você adiciona comportamento novo (e pode empilhar vários decoradores). Resolve extensão de funcionalidade.
+Proxy: a interface é a mesma, e você controla o acesso ao objeto (permissão, cache, lazy loading) sem adicionar funcionalidade nova de negócio. Resolve controle de acesso.
+
+Pergunta pra se fazer na prova:
+
+A interface muda? → se sim, é Adapter.
+Se não muda, você está adicionando comportamento novo (ex: formatação, log extra, criptografia)? → Decorator.
+Se não muda e você só está controlando quando/se/como o acesso acontece, sem mudar o que o método faz de fato? → Proxy.
+
+Repare que nos exemplos anteriores o CirurgiaProxy (Proxy) só decide se deixa a chamada passar ou não — ele não muda o que "operar" significa. Já o MensagemComColchetes (Decorator) efetivamente altera o resultado (getTexto() retorna algo diferente).
+
+Factory Method vs Abstract Factory
+
+Não estava na sua lista original, mas costuma confundir bastante com o Factory que você já tem:
+
+Factory Method: um único método que cria um tipo de produto, com subclasses decidindo qual variante retornar.
+Abstract Factory: uma família de métodos de fábrica relacionados, agrupados numa interface — usada quando você precisa criar vários produtos relacionados que devem ser consistentes entre si (ex: uma fábrica de UI que cria Botao, Checkbox e Menu, todos no mesmo estilo "Windows" ou "Mac").
+java
+interface FabricaUI {
+    Botao criarBotao();
+    Checkbox criarCheckbox();
+}
+
+class FabricaUIWindows implements FabricaUI {
+    public Botao criarBotao() { return new BotaoWindows(); }
+    public Checkbox criarCheckbox() { return new CheckboxWindows(); }
+}
+
+class FabricaUIMac implements FabricaUI {
+    public Botao criarBotao() { return new BotaoMac(); }
+    public Checkbox criarCheckbox() { return new CheckboxMac(); }
+}
+
+Se a prova pedir esse, me avisa que detalho junto com os outros que faltam (Command, Template Method, Composite, etc.) — mas esses três acima são os que mais aparecem em pegadinha de múltipla escolha.
