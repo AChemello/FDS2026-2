@@ -1,10 +1,10 @@
-package a.c.Livro;
+package arthur.chemello.Livros;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class LivroApplicationTests {
+class LivrosApplicationTests {
 
 	@Test
 	void contextLoads() {

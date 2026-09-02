@@ -1,14 +1,13 @@
-package a.c.Livro;
+package arthur.chemello.Livros;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Ex1BiblioecaApplication {
+public class LivrosApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Ex1BiblioecaApplication.class, args);
+		SpringApplication.run(LivrosApplication.class, args);
 	}
 
 }
-
